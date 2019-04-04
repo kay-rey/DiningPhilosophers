@@ -1,2 +1,2 @@
 # DiningPhilosophers
-##CSC 415
+## CSC 415
