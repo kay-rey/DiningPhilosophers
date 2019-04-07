@@ -20,18 +20,12 @@ public class Main {
             forks[i] = new Forks("Fork #" + i);
         }
         Philosopher[] philosophers = new Philosopher[PhilosopherForkAmount];
-        for(int i = 0; i < philosophers.length - 1; i++){
-            philosophers[i] = new Philosopher("Philosopher #" + i , forks[i], forks[i + 1], rounds);
+        for (int i = 0; i < philosophers.length - 1; i++) {
+            philosophers[i] = new Philosopher("Philosopher #" + i, forks[i], forks[i + 1], rounds);
             System.out.println(i);
         }
         philosophers[philosophers.length - 1] = new Philosopher("Philosopher #" + (philosophers.length - 1), forks[0], forks[philosophers.length - 1], rounds);
         System.out.println(philosophers.length - 1);
-
-//        philosophers[0] = new Philosopher("Philosopher #0", forks[0], forks[1], rounds);
-//        philosophers[1] = new Philosopher("Philosopher #1", forks[1], forks[2], rounds);
-//        philosophers[2] = new Philosopher("Philosopher #2", forks[2], forks[3], rounds);
-//        philosophers[3] = new Philosopher("Philosopher #3", forks[3], forks[4], rounds);
-//        philosophers[4] = new Philosopher("Philosopher #4", forks[0], forks[4], rounds);
 
         for (int i = 0; i < philosophers.length; i++) {
             System.out.println("Thread " + i + " has started");
@@ -66,7 +60,10 @@ class Philosopher extends Thread {
 
                 System.out.println(_name + " is eating");
 
-                Log.Delay(1000);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                }
 
                 _rightFork.release();
                 _leftFork.release();
@@ -78,23 +75,15 @@ class Philosopher extends Thread {
     public void think() {
         this._state = 1;
         System.out.println(_name + " is thinking");
-        Log.Delay(1000);
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+        }
     }
 
     public void run() {
         for (int i = 0; i <= _rounds; i++) {
             eat();
-        }
-    }
-}
-
-class Log {
-
-    public static void Delay(int ms) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
         }
     }
 }
