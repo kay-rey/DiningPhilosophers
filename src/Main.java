@@ -41,7 +41,7 @@ class Philosopher extends Thread {
     private String _name;
     private int _rounds;
 
-    public Philosopher(String name, Forks _left, Forks _right, int rounds) {
+    Philosopher(String name, Forks _left, Forks _right, int rounds) {
         this._name = name;
         _leftFork = _left;
         _rightFork = _right;
@@ -54,7 +54,7 @@ class Philosopher extends Thread {
         }
     }
 
-    public void eat() {
+    private void eat() {
         if (!_leftFork.used) {
             if (!_rightFork.used) {
                 _leftFork.take();
@@ -74,7 +74,7 @@ class Philosopher extends Thread {
         think();
     }
 
-    public void think() {
+    private void think() {
         System.out.println(_name + " is thinking");
         try {
             Thread.sleep(1000);
@@ -85,19 +85,19 @@ class Philosopher extends Thread {
 
 class Forks {
 
-    public boolean used;
-    public String _name;
+    boolean used;
+    String _name;
 
-    public Forks(String _name) {
+    Forks(String _name) {
         this._name = _name;
     }
 
-    public synchronized void take() {
+    synchronized void take() {
         System.out.println(_name + " was used");
         this.used = true;
     }
 
-    public synchronized void release() {
+    synchronized void release() {
         System.out.println(_name + " was released");
         this.used = false;
     }
