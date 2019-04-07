@@ -35,47 +35,47 @@ public class Main {
 }
 
 class Philosopher extends Thread {
-    private Forks _leftFork;
-    private Forks _rightFork;
+    private Forks leftFork;
+    private Forks rightFork;
 
-    private String _name;
-    private int _rounds;
+    private String name;
+    private int rounds;
 
     Philosopher(String name, Forks _left, Forks _right, int rounds) {
-        this._name = name;
-        _leftFork = _left;
-        _rightFork = _right;
-        _rounds = rounds;
+        this.name = name;
+        this.leftFork = _left;
+        this.rightFork = _right;
+        this.rounds = rounds;
     }
 
     public void run() { //overrides Threads run function to change how many rounds the philosophers go through
-        for (int i = 0; i <= _rounds; i++) {
+        for (int i = 0; i <= rounds; i++) {
             eat();
         }
     }
 
     private void eat() {
-        if (!_leftFork.used) {
-            if (!_rightFork.used) {
-                _leftFork.take();
-                _rightFork.take();
+        if (!leftFork.used) {   //first checks if the left fork is not being used
+            if (!rightFork.used) {  //secondly checks if right fork is not being used
+                leftFork.take();    //if both left and right are not being used then take both forks for the philospher to start eating
+                rightFork.take();
 
-                System.out.println(_name + " is eating");
+                System.out.println(name + " is eating");
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1000); //simulated the philosphper taking time to eat
                 } catch (InterruptedException ex) {
                 }
 
-                _rightFork.release();
-                _leftFork.release();
+                rightFork.release();    //releases both the forks when done eating
+                leftFork.release();
             }
         }
         think();
     }
 
     private void think() {
-        System.out.println(_name + " is thinking");
+        System.out.println(name + " is thinking");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -86,19 +86,19 @@ class Philosopher extends Thread {
 class Forks {
 
     boolean used;
-    String _name;
+    private String name;
 
-    Forks(String _name) {
-        this._name = _name;
+    Forks(String name) {
+        this.name = name;
     }
 
     synchronized void take() {
-        System.out.println(_name + " was used");
+        System.out.println(name + " was used");
         this.used = true;
     }
 
     synchronized void release() {
-        System.out.println(_name + " was released");
+        System.out.println(name + " was released");
         this.used = false;
     }
 }
